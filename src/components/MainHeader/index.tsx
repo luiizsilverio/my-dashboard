@@ -14,7 +14,7 @@ const MainHeader = () => {
     <S.Container>
       <Toggle />
       <S.Profile>
-        <S.Welcome>Olá, {emoji}</S.Welcome>
+        <S.Welcome>Olá, { emoji }</S.Welcome>
         <S.UserName>Luiiz Oliveira</S.UserName>
       </S.Profile>
     </S.Container>

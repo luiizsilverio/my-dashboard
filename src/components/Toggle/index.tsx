@@ -12,7 +12,7 @@ const Toggle = () => {
         onChange={(v) => setAtivo(v)} 
         checked={ativo}
         checkedIcon={false}
-        uncheckedIcon={false}      
+        uncheckedIcon={false}   
       />
       <S.ToggleLabel>Dark</S.ToggleLabel>
     </S.Container>

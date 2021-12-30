@@ -1,6 +1,15 @@
+import * as S from './styles'
+
+import Content from '../../components/Content'
+import ContentHeader from '../../components/ContentHeader'
+
 const Dashboard = () => {
   return (
-    <h1>Dashboard</h1>
+    <S.Container>
+      <Content>
+        <ContentHeader />
+      </Content>
+    </S.Container>
   )
 }
 

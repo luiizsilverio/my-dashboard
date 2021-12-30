@@ -1,9 +1,14 @@
+import { ReactNode } from 'react'
 import * as S from './styles'
 
-const Content = () => {
+type Props = {
+  children: ReactNode
+}
+
+const Content = ({ children }: Props) => {
   return (
     <S.Container>
-      <h1>Content</h1>
+      { children }
     </S.Container>
   )
 }
