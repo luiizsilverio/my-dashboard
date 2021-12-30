@@ -1,14 +1,23 @@
 import * as S from './styles'
 
-import Content from '../../components/Content'
 import ContentHeader from '../../components/ContentHeader'
+import SelectInput from '../../components/SelectInput'
 
 const Dashboard = () => {
+  const options = [
+    { value: 0, label: 'Laranja' },
+    { value: 1, label: 'Pera' },
+    { value: 2, label: 'Maçã' },
+  ]
+
   return (
     <S.Container>
-      <Content>
-        <ContentHeader />
-      </Content>
+      <ContentHeader
+        title="Dashboard"
+        lineColor='#f7931b'
+      >
+        <SelectInput options={options} />
+      </ContentHeader>      
     </S.Container>
   )
 }

@@ -1,14 +1,21 @@
+import { ReactNode } from 'react'
 import * as S from './styles'
 
-const ContentHeader = () => {
+interface Props {
+  title: string;
+  lineColor: string;
+  children?: ReactNode
+}
+
+const ContentHeader = ({ title, lineColor, children }: Props) => {
+
   return (
     <S.Container>
-      <S.TitleContainer>
-        <h1>Título</h1>
+      <S.TitleContainer lineColor={lineColor}>
+        <h1>{ title }</h1>
       </S.TitleContainer>
       <S.Controllers>
-        <button type="button">AAA</button>
-        <button type="button">BBB</button>
+        { children }
       </S.Controllers>
     </S.Container>
   )
