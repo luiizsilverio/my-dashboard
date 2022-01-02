@@ -1,7 +1,6 @@
 import * as S from './styles'
 
 type Props = {
-  cardColor: string
   tagColor: string
   title: string
   subtitle: string
@@ -10,7 +9,7 @@ type Props = {
 
 const DetailCard = (props: Props) => {
   return (
-    <S.Container color={props.cardColor}>
+    <S.Container>
       <S.Tag color={props.tagColor} />
       <div>
         <span>{ props.title }</span>
