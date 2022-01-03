@@ -1,10 +1,22 @@
+import { useMemo } from 'react'
+import { useParams } from 'react-router-dom'
+
 import * as S from './styles'
+
 
 import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
 import DetailCard from '../../components/DetailCard'
 
 const Details = () => {
+  const { type } = useParams()  
+  
+  const title = useMemo(() => (
+    type === "entradas"
+      ? { caption: "Entradas", lineColor: '#4e41f0' }
+      : { caption: "Saídas", lineColor:  '#e44c4e' }
+  ), [type])
+
   const months = [
     { value: 1, label: 'Janeiro' },
     { value: 2, label: 'Fevereiro' },
@@ -42,8 +54,8 @@ const Details = () => {
   return (
     <S.Container>
       <ContentHeader
-        title="Saídas"
-        lineColor='#e44c4e'
+        title={ title.caption }
+        lineColor={ title.lineColor }
       >
         <SelectInput options={ months } />
         <SelectInput options={ years } />

@@ -12,15 +12,15 @@ const Aside = () => {
       </S.Header>
 
       <S.MenuContainer>
-        <S.MenuLink href="#">
+        <S.MenuLink href="/dashboard">
           <MdDashboard />
           Dashboard
         </S.MenuLink>
-        <S.MenuLink href="#">
+        <S.MenuLink href="/list/entradas">
           <MdArrowUpward />
           Entradas
         </S.MenuLink>
-        <S.MenuLink href="#">
+        <S.MenuLink href="/list/saidas">
           <MdArrowDownward />
           Saídas
         </S.MenuLink>
