@@ -1,20 +1,37 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import * as S from './styles'
-
+import gains from '../../utils/gains'
+import expenses from '../../utils/expenses'
+import formatValue from '../../utils/formatValue'
+import formatDate from '../../utils/formatDate'
 
 import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
 import DetailCard from '../../components/DetailCard'
 
+interface IData {
+  id: string
+  description: string
+  amountFormatted: string
+  frequency: string
+  dateFormatted: string
+  tagColor: string
+}
+
 const Details = () => {
+  const [data, setData] = useState<IData[]>([])
   const { type } = useParams()  
   
   const title = useMemo(() => (
     type === "entradas"
       ? { caption: "Entradas", lineColor: '#4e41f0' }
       : { caption: "Saídas", lineColor:  '#e44c4e' }
+  ), [type])
+
+  const listData = useMemo(() => (
+    type === "entradas" ? gains : expenses
   ), [type])
 
   const months = [
@@ -40,16 +57,19 @@ const Details = () => {
     years.push({value: ano, label: ano})
   }    
 
-  const cards = [
-    { title: 'Conta de luz', subtitle: '27/11/2021', amount: 'R$ 130,00'},
-    { title: 'Aluguel', subtitle: '27/11/2021', amount: 'R$ 1200,00'},
-    { title: 'Refeição', subtitle: '27/11/2021', amount: 'R$ 38,00'},
-    { title: 'Presente mãe', subtitle: '27/11/2021', amount: 'R$ 250,00'},
-    { title: 'Presente tia', subtitle: '27/11/2021', amount: 'R$ 110,00'},
-    { title: 'IPVA', subtitle: '27/11/2021', amount: 'R$ 600,00'},
-    { title: 'Plano de saúde', subtitle: '27/11/2021', amount: 'R$ 380,00'},
-    { title: 'remédio', subtitle: '27/11/2021', amount: 'R$ 55,00'}    
-  ]
+
+  useEffect(() => {
+    const response = listData.map((item, index) => ({
+      id: index.toString(),
+      description: item.description,
+      amountFormatted: formatValue(parseFloat(item.amount)),
+      frequency: item.frequency,
+      dateFormatted: formatDate(item.date),
+      tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#e44c4e'
+    }))
+
+    setData(response)
+  }, [])
 
   return (
     <S.Container>
@@ -68,13 +88,13 @@ const Details = () => {
 
       <S.Content>
         {
-          cards.map((item, index) => (
+          data.map((item, index) => (
             <DetailCard 
-              key={item.title}              
-              tagColor='#e44c4e'
-              title={ item.title }
-              subtitle={ item.subtitle }
-              amount={ item.amount }
+              key={ item.id }              
+              tagColor={ item.tagColor }
+              title={ item.description }
+              subtitle={ item.dateFormatted }
+              amount={ item.amountFormatted }
             />
           ))
         }        

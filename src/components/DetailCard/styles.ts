@@ -26,7 +26,8 @@ export const Container = styled.li`
     padding-left: 10px;
 
     span {
-
+      font-weight: 500;
+      /* font-size: 18px; */
     }
   }
 `;
