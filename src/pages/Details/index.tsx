@@ -11,6 +11,23 @@ import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
 import DetailCard from '../../components/DetailCard'
 
+const years: {value: number, label: number}[] = []  
+
+const months = [
+  { value: 1, label: 'Janeiro' },
+  { value: 2, label: 'Fevereiro' },
+  { value: 3, label: 'Março' },
+  { value: 4, label: 'Abril' },
+  { value: 5, label: 'Maio' },
+  { value: 6, label: 'Junho' },
+  { value: 7, label: 'Julho' },
+  { value: 8, label: 'Agosto' },
+  { value: 9, label: 'Setembro' },
+  { value: 10, label: 'Outubro' },
+  { value: 11, label: 'Novembro' },
+  { value: 12, label: 'Dezembro' },
+]
+
 interface IData {
   id: string
   description: string
@@ -22,6 +39,9 @@ interface IData {
 
 const Details = () => {
   const [data, setData] = useState<IData[]>([])
+  const hoje = new Date()
+  const [monthSel, setMonthSel] = useState(String(hoje.getMonth() + 1))
+  const [yearSel, setYearSel] = useState(String(hoje.getFullYear()))
   const { type } = useParams()  
   
   const title = useMemo(() => (
@@ -34,32 +54,16 @@ const Details = () => {
     type === "entradas" ? gains : expenses
   ), [type])
 
-  const months = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' },
-  ]
-
-  const years = []
-  const anoAtual = new Date().getFullYear()
-
-  for (let i = 1; i <= 5; i++) {
-    const ano = anoAtual - i + 1;
-    years.push({value: ano, label: ano})
-  }    
-
-
   useEffect(() => {
-    const response = listData.map((item, index) => ({
+    const response = listData.filter(item => {
+      const date = new Date(item.date)
+      const month = date.getMonth() + 1
+      const year = date.getFullYear()
+
+      return month === parseInt(monthSel) && year === parseInt(yearSel)
+    })
+    
+    const lista = response.map((item, index) => ({
       id: index.toString(),
       description: item.description,
       amountFormatted: formatValue(parseFloat(item.amount)),
@@ -68,8 +72,24 @@ const Details = () => {
       tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#e44c4e'
     }))
 
-    setData(response)
-  }, [])
+    setData(lista)
+    
+    const hoje = new Date()
+    const anoAtual = hoje.getFullYear()
+
+    // busca o menor ano da lista
+    const ano1 = listData.reduce((acc, item) => {
+      const vdata = new Date(item.date)
+      return vdata.getFullYear() < anoAtual ? vdata.getFullYear() : acc
+    }, anoAtual)    
+
+    years.length = 0
+    for (let ano = ano1; ano <= anoAtual; ano++) {
+      years.push({value: ano, label: ano})
+    }    
+
+    years.reverse()
+  }, [listData, monthSel, yearSel])
 
   return (
     <S.Container>
@@ -77,8 +97,16 @@ const Details = () => {
         title={ title.caption }
         lineColor={ title.lineColor }
       >
-        <SelectInput options={ months } />
-        <SelectInput options={ years } />
+        <SelectInput 
+          options={ months } 
+          defaultValue={ monthSel }
+          onChange={(e) => setMonthSel(e.target.value)}
+        />
+        <SelectInput 
+          options={ years } 
+          defaultValue={ yearSel }
+          onChange={(e) => setYearSel(e.target.value)}
+        />
       </ContentHeader>     
 
       <S.Filters>
