@@ -11,9 +11,12 @@ import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
 import DetailCard from '../../components/DetailCard'
 
-const years: {value: number, label: number}[] = []  
+interface ILista {
+  label: string | number;
+  value: string | number;
+}
 
-const months = [
+const months: ILista[] = [
   { value: 1, label: 'Janeiro' },
   { value: 2, label: 'Fevereiro' },
   { value: 3, label: 'Março' },
@@ -42,6 +45,7 @@ const Details = () => {
   const hoje = new Date()
   const [monthSel, setMonthSel] = useState(String(hoje.getMonth() + 1))
   const [yearSel, setYearSel] = useState(String(hoje.getFullYear()))
+  const [frequency, setFrequency] = useState({recorrente: true, eventual: true})
   const { type } = useParams()  
   
   const title = useMemo(() => (
@@ -54,13 +58,57 @@ const Details = () => {
     type === "entradas" ? gains : expenses
   ), [type])
 
+  const years: ILista[] = useMemo(() => {
+    const uniqueYears: number[] = []
+    
+    listData.forEach(item => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
+      
+      if (!uniqueYears.includes(year)) {
+        uniqueYears.push(year)
+      }
+    })
+
+    let lista: ILista[] = []
+    uniqueYears.forEach(year => {
+      lista.push({
+        value: year, 
+        label: year.toString()
+      })
+    })
+    
+    return lista
+  }, [listData])
+
+  function handleFrequency(selFreq: string) {
+    if (selFreq === 'recorrente') {
+      setFrequency({
+        recorrente: !frequency.recorrente, 
+        eventual: frequency.eventual
+      })
+    } else {
+      setFrequency({
+        recorrente: frequency.recorrente, 
+        eventual: !frequency.eventual
+      })
+    }    
+  }
+
   useEffect(() => {
     const response = listData.filter(item => {
       const date = new Date(item.date)
       const month = date.getMonth() + 1
       const year = date.getFullYear()
+      let frequencyOK
+      
+      if (item.frequency === 'recorrente') {
+        frequencyOK = frequency.recorrente
+      } else {
+        frequencyOK = frequency.eventual
+      }
 
-      return month === parseInt(monthSel) && year === parseInt(yearSel)
+      return month === parseInt(monthSel) && year === parseInt(yearSel) && frequencyOK        
     })
     
     const lista = response.map((item, index) => ({
@@ -83,14 +131,9 @@ const Details = () => {
       return vdata.getFullYear() < anoAtual ? vdata.getFullYear() : acc
     }, anoAtual)    
 
-    years.length = 0
-    for (let ano = ano1; ano <= anoAtual; ano++) {
-      years.push({value: ano, label: ano})
-    }    
+  }, [listData, monthSel, yearSel, frequency])
 
-    years.reverse()
-  }, [listData, monthSel, yearSel])
-
+  console.log(frequency)
   return (
     <S.Container>
       <ContentHeader
@@ -110,8 +153,18 @@ const Details = () => {
       </ContentHeader>     
 
       <S.Filters>
-        <button type="button" className='tag-filter tag-recorrente'>Recorrentes</button>
-        <button type="button" className='tag-filter tag-eventual'>Eventuais</button>
+        <button type="button" 
+          className={`tag-filter tag-recorrente ${frequency.recorrente || "tag-inativo"}`}
+          onClick={() => handleFrequency('recorrente')}
+        >
+          Recorrentes
+        </button>
+        <button type="button" 
+          className={`tag-filter tag-eventual ${frequency.eventual || "tag-inativo"}`}
+          onClick={() => handleFrequency('eventual')}
+        >
+          Eventuais
+        </button>
       </S.Filters>
 
       <S.Content>

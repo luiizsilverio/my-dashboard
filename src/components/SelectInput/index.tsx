@@ -1,12 +1,14 @@
 import { ChangeEvent } from 'react'
 import * as S from './styles'
 
+interface ILista {
+  label: string | number;
+  value: string | number;
+}
+
 interface Props {
-  options: {
-    label: string | number;
-    value: string | number;
-  }[]
-  defaultValue?: string | number;
+  options: ILista[]
+  defaultValue?: string | number
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void | undefined
 }
 

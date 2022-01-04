@@ -8,6 +8,7 @@ export const Filters = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   margin-bottom: 20px;
 
   .tag-filter {
@@ -16,11 +17,17 @@ export const Filters = styled.div`
     background: none;
     color: ${props => props.theme.colors.white};    
     margin: 0 10px;    
-    transition: opacity .3s;    
+    transition: opacity transform .3s;        
 
     &:hover {
       opacity: 0.7;
+      transform: scale(.95);
     }    
+  }
+
+  .tag-inativo {
+    text-decoration: line-through;
+    color: ${props => props.theme.colors.gray};
   }
 
   .tag-recorrente::after {
@@ -28,14 +35,14 @@ export const Filters = styled.div`
     display: block;
     width: 55px;
     margin: 0 auto;
-    border-bottom: 5px solid ${props => props.theme.colors.warning};
+    border-bottom: 5px solid ${props => props.theme.colors.success};
   }
-
+  
   .tag-eventual::after {
     content: "";
     display: block;
     width: 55px;
     margin: 0 auto;
-    border-bottom: 5px solid ${props => props.theme.colors.success};
+    border-bottom: 5px solid ${props => props.theme.colors.warning};
   }
 `;
