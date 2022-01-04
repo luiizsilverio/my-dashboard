@@ -81,6 +81,7 @@ const Details = () => {
     return lista
   }, [listData])
 
+
   function handleFrequency(selFreq: string) {
     if (selFreq === 'recorrente') {
       setFrequency({
@@ -95,6 +96,7 @@ const Details = () => {
     }    
   }
 
+
   useEffect(() => {
     const response = listData.filter(item => {
       const date = new Date(item.date)
@@ -108,7 +110,7 @@ const Details = () => {
         frequencyOK = frequency.eventual
       }
 
-      return month === parseInt(monthSel) && year === parseInt(yearSel) && frequencyOK        
+      return frequencyOK && month === parseInt(monthSel) && year === parseInt(yearSel)        
     })
     
     const lista = response.map((item, index) => ({
@@ -122,18 +124,9 @@ const Details = () => {
 
     setData(lista)
     
-    const hoje = new Date()
-    const anoAtual = hoje.getFullYear()
-
-    // busca o menor ano da lista
-    const ano1 = listData.reduce((acc, item) => {
-      const vdata = new Date(item.date)
-      return vdata.getFullYear() < anoAtual ? vdata.getFullYear() : acc
-    }, anoAtual)    
-
   }, [listData, monthSel, yearSel, frequency])
 
-  console.log(frequency)
+
   return (
     <S.Container>
       <ContentHeader
