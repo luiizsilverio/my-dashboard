@@ -10,6 +10,17 @@ import months from '../../utils/months'
 import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
 import TotalCard from '../../components/TotalCard'
+import MessageBox from '../../components/MessageBox'
+import happyImg from '../../assets/happy.svg'
+import sadImg from '../../assets/sad.svg'
+import grinImg from '../../assets/grinning.svg'
+import PizzaChart from '../../components/PizzaChart'
+
+interface IMovimentacao {
+  total: number
+  dataUlt: Date | null
+  formattedDate: string
+}
 
 interface ILista {
   label: string | number;
@@ -46,6 +57,87 @@ const Dashboard = () => {
   }, [])
 
 
+  const saidas: IMovimentacao = useMemo(() => {
+    let movim: IMovimentacao = { total: 0, dataUlt: null, formattedDate: "" }
+
+    expenses.forEach(item => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      if (month === monthSel && year === yearSel) {
+        const value = parseInt(item.amount)
+        if (!isNaN(value)) {
+          movim.total += value
+        }
+      }
+
+      if (!movim.dataUlt || date > movim.dataUlt) {
+        movim.dataUlt = date
+        movim.formattedDate = formatDate(item.date)
+      }
+    })
+    return movim
+  }, [monthSel, yearSel])
+
+
+  const entradas: IMovimentacao = useMemo(() => {
+    let movim: IMovimentacao = { total: 0, dataUlt: null, formattedDate: "" }
+
+    gains.forEach(item => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      if (month === monthSel && year === yearSel) {
+        const value = parseInt(item.amount)
+        if (!isNaN(value)) {
+          movim.total += value
+        }
+      }
+
+      if (!movim.dataUlt || date > movim.dataUlt) {
+        movim.dataUlt = date
+        movim.formattedDate = formatDate(item.date)
+      }
+    })
+    return movim
+  }, [monthSel, yearSel])
+
+
+  const saldo = useMemo(() => {
+    return entradas.total - saidas.total
+  }, [entradas, saidas])
+
+
+  const message = useMemo(() => {
+    if (saldo < 0) {
+      return {
+        title: "Que triste!",
+        description: "Neste mês, você gastou mais do que deveria.",
+        footer: "Contenha seus gastos, corte o supérfluo.",
+        icon: sadImg
+      }
+    } 
+    else if (saldo === 0) {
+      return {
+        title: "Ufaa!",
+        description: "Neste mês, você atingiu o teto de gastos.",
+        footer: "Cuidado, contenha os gastos.",
+        icon: grinImg
+      }
+    }
+    else {
+      return {
+        title: "Muito bem!",
+        description: "Você está no lucro.",
+        footer: "Continue assim. Considere investir o seu saldo.",
+        icon: happyImg
+      }
+    }
+  }, [saldo])
+
+
   function handleMonth(month: string) {
     const mes = parseInt(month)
     if (!isNaN(mes)) {
@@ -63,7 +155,8 @@ const Dashboard = () => {
       throw new Error('Ano inválido');
     }
   }
-    
+  
+  
   return (
     <S.Container>
       <ContentHeader
@@ -85,7 +178,7 @@ const Dashboard = () => {
       <S.Content>
         <TotalCard 
           title='saldo'
-          amount={150.00}
+          amount={ saldo }
           footer='atualizado com base nas entradas e saídas'
           icon='dolar'
           color='#4e41f0'
@@ -93,19 +186,28 @@ const Dashboard = () => {
 
         <TotalCard 
           title='entradas'
-          amount={5000.00}
-          footer='última movimentação em'
+          amount={ entradas.total }
+          footer={`última movimentação em ${ entradas.formattedDate }`}
           icon='arrowUp'
           color='#f7931b'
         />
 
         <TotalCard 
           title='saídas'
-          amount={150.00}
-          footer='última movimentação em'
+          amount={ saidas.total }
+          footer={`última movimentação em ${ saidas.formattedDate }`}
           icon='arrowDown'
           color='#e44c4e'
         />
+
+        <MessageBox 
+          title={ message.title }
+          description={ message.description }
+          footer={ message.footer }
+          icon={ message.icon }
+        />
+
+        <PizzaChart />
       </S.Content>
     </S.Container>
   )
