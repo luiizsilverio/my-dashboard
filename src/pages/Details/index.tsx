@@ -6,6 +6,7 @@ import gains from '../../utils/gains'
 import expenses from '../../utils/expenses'
 import formatValue from '../../utils/formatValue'
 import formatDate from '../../utils/formatDate'
+import months from '../../utils/months'
 
 import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
@@ -15,21 +16,6 @@ interface ILista {
   label: string | number;
   value: string | number;
 }
-
-const months: ILista[] = [
-  { value: 1, label: 'Janeiro' },
-  { value: 2, label: 'Fevereiro' },
-  { value: 3, label: 'Março' },
-  { value: 4, label: 'Abril' },
-  { value: 5, label: 'Maio' },
-  { value: 6, label: 'Junho' },
-  { value: 7, label: 'Julho' },
-  { value: 8, label: 'Agosto' },
-  { value: 9, label: 'Setembro' },
-  { value: 10, label: 'Outubro' },
-  { value: 11, label: 'Novembro' },
-  { value: 12, label: 'Dezembro' },
-]
 
 interface IData {
   id: string
@@ -43,8 +29,8 @@ interface IData {
 const Details = () => {
   const [data, setData] = useState<IData[]>([])
   const hoje = new Date()
-  const [monthSel, setMonthSel] = useState(String(hoje.getMonth() + 1))
-  const [yearSel, setYearSel] = useState(String(hoje.getFullYear()))
+  const [monthSel, setMonthSel] = useState(hoje.getMonth() + 1)
+  const [yearSel, setYearSel] = useState(hoje.getFullYear())
   const [frequency, setFrequency] = useState({recorrente: true, eventual: true})
   const { type } = useParams()  
   
@@ -97,6 +83,25 @@ const Details = () => {
   }
 
 
+  function handleMonth(month: string) {
+    const mes = parseInt(month)
+    if (!isNaN(mes)) {
+      setMonthSel(mes)
+    } else {
+      throw new Error('Mês inválido');
+    }
+  }
+
+  function handleYear(year: string) {
+    const ano = parseInt(year)
+    if (!isNaN(ano)) {
+      setYearSel(ano)
+    } else {
+      throw new Error('Ano inválido');
+    }
+  }
+  
+
   useEffect(() => {
     const response = listData.filter(item => {
       const date = new Date(item.date)
@@ -110,7 +115,7 @@ const Details = () => {
         frequencyOK = frequency.eventual
       }
 
-      return frequencyOK && month === parseInt(monthSel) && year === parseInt(yearSel)        
+      return frequencyOK && month === monthSel && year === yearSel
     })
     
     const lista = response.map((item, index) => ({
@@ -123,7 +128,7 @@ const Details = () => {
     }))
 
     setData(lista)
-    
+
   }, [listData, monthSel, yearSel, frequency])
 
 
@@ -136,12 +141,12 @@ const Details = () => {
         <SelectInput 
           options={ months } 
           defaultValue={ monthSel }
-          onChange={(e) => setMonthSel(e.target.value)}
+          onChange={(e) => handleMonth(e.target.value)}
         />
         <SelectInput 
           options={ years } 
           defaultValue={ yearSel }
-          onChange={(e) => setYearSel(e.target.value)}
+          onChange={(e) => handleYear(e.target.value)}
         />
       </ContentHeader>     
 
