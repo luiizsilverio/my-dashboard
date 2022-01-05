@@ -138,6 +138,30 @@ const Dashboard = () => {
   }, [saldo])
 
 
+  const resultado = useMemo(() => {
+    const total = entradas.total + saidas.total
+    const p_ent = total === 0 ? 0 : entradas.total / total * 100
+    const p_sai = total === 0 ? 0 : 100 - p_ent
+
+    const data = [
+      {
+        name: "Entradas",
+        value: entradas.total,
+        percent: p_ent,
+        color: "#E44C4E"
+      },
+      {
+        name: "Saídas",
+        value: saidas.total,
+        percent: p_sai,
+        color: "#f7931b"
+      }
+    ]
+
+    return data;
+  }, [entradas, saidas])
+
+
   function handleMonth(month: string) {
     const mes = parseInt(month)
     if (!isNaN(mes)) {
@@ -207,7 +231,9 @@ const Dashboard = () => {
           icon={ message.icon }
         />
 
-        <PizzaChart />
+        <PizzaChart 
+          data={ resultado }
+        />
       </S.Content>
     </S.Container>
   )

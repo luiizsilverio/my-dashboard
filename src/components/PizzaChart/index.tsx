@@ -1,33 +1,49 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import * as S from './styles'
 
-const PizzaChart = () => (
+interface IResultado {
+  name: string
+  value: number
+  percent: number
+  color: string
+}
+
+interface PizzaProps {
+  data: IResultado[]
+}
+
+const PizzaChart = ({ data }: PizzaProps) => (
   <S.Container>
     <S.SideLeft>
       <h2>Relação</h2>
       <S.LegendContainer>
-        <S.Legend color="#f7931b">
-          <div>95%</div>
-          <span>Saídas</span>
-        </S.Legend>
-        <S.Legend color="#e44c4e">
-          <div>5%</div>
-          <span>Entradas</span>
-        </S.Legend>
+        {
+          data.map(item => (
+            <S.Legend color={ item.color } key={ item.name }>
+              <div>{ `${ item.percent.toFixed(1) }%` }</div>
+              <span>{ item.name }</span>
+            </S.Legend>
+          ))
+        }                
       </S.LegendContainer>
     </S.SideLeft>
 
     <S.Main>
-      <S.ResponsiveContainer>
+      <ResponsiveContainer>
         <PieChart>
           <Pie 
-            data={[{amount: 30, percentual: 95}]}
+            data={data}
+            dataKey="percent"
             labelLine={false}
-            dataKey="percentual"
           >
+            {
+              data.map(item => (
+                <Cell key={ item.name } fill={ item.color } />
+              ))
+            }
           </Pie>
         </PieChart>
-      </S.ResponsiveContainer>
+      </ResponsiveContainer>
     </S.Main>
   </S.Container>
 )

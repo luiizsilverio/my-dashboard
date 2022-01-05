@@ -49,11 +49,11 @@ export const Legend = styled.li<ILegendProps>`
   
   > div {
     background-color: ${props => props.color};
-    width: 42px;
-    height: 42px;
+    width: 54px;
+    height: 36px;
     border-radius: 6px;
-    font-size: 17px;
-    line-height: 42px;
+    font-size: 16px;
+    line-height: 36px;
     text-align: center;
   }
 
@@ -63,7 +63,7 @@ export const Legend = styled.li<ILegendProps>`
 `;
 
 export const Main = styled.main`
-`;
-
-export const ResponsiveContainer = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
 `;

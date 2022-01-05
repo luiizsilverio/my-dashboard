@@ -34,9 +34,9 @@ const TotalCard = (props: Props) => {
       <span>{ props.title }</span>
       <h1>
         <CountUp
-          start={0}
+          start={ props.amount > 100 ? props.amount - 100 : 0 }
           end={ props.amount }
-          duration={1.5}
+          duration={1.2}
           prefix='R$ '
           separator='.'
           decimal=','
