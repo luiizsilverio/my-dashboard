@@ -15,6 +15,7 @@ import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinImg from '../../assets/grinning.svg'
 import PizzaChart from '../../components/PizzaChart'
+import HistoryBox from '../../components/HistoryBox'
 
 interface IMovimentacao {
   total: number
@@ -66,7 +67,7 @@ const Dashboard = () => {
       const month = date.getMonth() + 1
 
       if (month === monthSel && year === yearSel) {
-        const value = parseInt(item.amount)
+        const value = parseFloat(item.amount)
         if (!isNaN(value)) {
           movim.total += value
         }
@@ -90,7 +91,7 @@ const Dashboard = () => {
       const month = date.getMonth() + 1
 
       if (month === monthSel && year === yearSel) {
-        const value = parseInt(item.amount)
+        const value = parseFloat(item.amount)
         if (!isNaN(value)) {
           movim.total += value
         }
@@ -107,6 +108,46 @@ const Dashboard = () => {
 
   const saldo = useMemo(() => {
     return entradas.total - saidas.total
+  }, [entradas, saidas])
+
+
+  const historyData = useMemo(() => {
+    return months.map((_, month) => {
+      let totEntradas = 0
+      gains.forEach(item => {
+        const date = new Date(item.date)
+        const mes = date.getMonth()
+        const ano = date.getFullYear()
+
+        if (mes === month && ano === yearSel) {
+          const value = parseFloat(item.amount)
+          if (!isNaN(value)) {
+            totEntradas += value
+          }
+        }
+      })
+
+      let totSaidas = 0
+      expenses.forEach(item => {
+        const date = new Date(item.date)
+        const mes = date.getMonth()
+        const ano = date.getFullYear()
+
+        if (mes === month && ano === yearSel) {
+          const value = parseFloat(item.amount)
+          if (!isNaN(value)) {
+            totSaidas += value
+          }
+        }
+      })
+
+      return {
+        monthNo: month,
+        month: months[month].label.substring(0, 3),
+        totEntradas,
+        totSaidas
+      }
+    })
   }, [entradas, saidas])
 
 
@@ -179,7 +220,7 @@ const Dashboard = () => {
       throw new Error('Ano inválido');
     }
   }
-  
+  console.log(historyData)
   
   return (
     <S.Container>
@@ -233,6 +274,12 @@ const Dashboard = () => {
 
         <PizzaChart 
           data={ resultado }
+        />
+
+        <HistoryBox 
+          data={ historyData } 
+          lineColorEnt='#f7931b'
+          lineColorSai='#e44c4e'
         />
       </S.Content>
     </S.Container>
