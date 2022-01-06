@@ -9,13 +9,14 @@ interface IResultado {
 }
 
 interface PizzaProps {
+  title: string
   data: IResultado[]
 }
 
-const PizzaChart = ({ data }: PizzaProps) => (
+const PizzaChart = ({ title, data }: PizzaProps) => (
   <S.Container>
     <S.SideLeft>
-      <h2>Relação</h2>
+      <h2>{ title }</h2>
       <S.LegendContainer>
         {
           data.map(item => (

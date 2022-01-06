@@ -144,11 +144,16 @@ const Dashboard = () => {
       return {
         monthNo: month,
         month: months[month].label.substring(0, 3),
-        totEntradas,
-        totSaidas
+        totEntradas: parseFloat(totEntradas.toFixed(2)),
+        totSaidas: parseFloat(totSaidas.toFixed(2))
       }
     })
-  }, [entradas, saidas])
+    // .filter(item => {
+    //   const mesAtual = new Date().getMonth()
+    //   const anoAtual = new Date().getFullYear()
+    //   return (yearSel !== anoAtual || item.monthNo <= mesAtual)
+    // })
+  }, [yearSel])
 
 
   const message = useMemo(() => {
@@ -220,7 +225,6 @@ const Dashboard = () => {
       throw new Error('Ano inválido');
     }
   }
-  console.log(historyData)
   
   return (
     <S.Container>
@@ -273,6 +277,7 @@ const Dashboard = () => {
         />
 
         <PizzaChart 
+          title={ monthSel > 0 ? `${months[monthSel -1].label} de ${yearSel}` : "" }
           data={ resultado }
         />
 
@@ -281,6 +286,7 @@ const Dashboard = () => {
           lineColorEnt='#f7931b'
           lineColorSai='#e44c4e'
         />
+
       </S.Content>
     </S.Container>
   )

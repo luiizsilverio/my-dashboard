@@ -8,6 +8,7 @@ import {
 } from 'recharts'
 
 import * as S from './styles'
+import formatValue from '../../utils/formatValue'
 
 interface Props {
   data: {
@@ -21,17 +22,38 @@ interface Props {
 
 const HistoryBox = ({ data, lineColorEnt, lineColorSai }: Props) => (
   <S.Container>
-    <h2>Histórico de saldo</h2>
+    <S.Header>
+      <h2>Histórico de saldo</h2>
+      <S.LegendContainer>
+        <S.Legend color={ lineColorEnt }>
+          <div>30%</div>
+          <span>Entradas</span>
+        </S.Legend>
+        <S.Legend color={ lineColorSai }>
+          <div>70%</div>
+          <span>Saídas</span>
+        </S.Legend>
+      </S.LegendContainer>
+    </S.Header>
 
+    <S.ChartContainer>
     <ResponsiveContainer>
-      <LineChart data={ data }>
+      <LineChart 
+        data={ data }
+        margin={{ top: 5, bottom: 5, left: 10, right: 10 }}
+      >
         <CartesianGrid strokeDasharray="3 3" stroke="#cecece" />
         <XAxis dataKey="month" stroke="#cecece" />
-        <Tooltip />
+      
+        <Tooltip 
+          formatter={(value: number) => formatValue(value)}
+          animationDuration={0} 
+        />
+
         <Line 
           name="Entradas"
           type="monotone"
-          dataKey="totalEntradas"
+          dataKey="totEntradas"
           stroke={ lineColorEnt }
           strokeWidth={5}
           dot={{ r: 5 }}
@@ -40,7 +62,7 @@ const HistoryBox = ({ data, lineColorEnt, lineColorSai }: Props) => (
         <Line 
           name="Saídas"
           type="monotone"
-          dataKey="totalSaidas"
+          dataKey="totSaidas"
           stroke={ lineColorSai }
           strokeWidth={5}
           dot={{ r: 5 }}
@@ -48,6 +70,7 @@ const HistoryBox = ({ data, lineColorEnt, lineColorSai }: Props) => (
         />        
       </LineChart>
     </ResponsiveContainer>
+    </S.ChartContainer>
   </S.Container>
 )
 

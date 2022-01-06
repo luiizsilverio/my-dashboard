@@ -11,7 +11,7 @@ export const Container = styled.div`
 `;
 
 export const SideLeft = styled.aside`
-  padding: 30px 20px;
+  padding: 30px 10px 30px 20px;  
 
   > h2 {
     margin-bottom: 20px;
@@ -20,7 +20,7 @@ export const SideLeft = styled.aside`
 
 export const LegendContainer = styled.ul`
   list-style: none;
-  height: 170px;
+  height: 150px;
   padding-right: 15px;
   overflow-y: scroll;
 

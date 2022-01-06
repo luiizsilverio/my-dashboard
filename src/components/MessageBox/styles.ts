@@ -21,5 +21,10 @@ export const Container = styled.div`
     p {
       font-size: 18px;
     }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+    }
   }
 `;
