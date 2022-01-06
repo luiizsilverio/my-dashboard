@@ -7,8 +7,10 @@ const Aside = () => {
   return (
     <S.Container>
       <S.Header>
+        <a href="/">
           <S.Logo src={logoImg} alt="Logotipo My-Dashboard" />
           <S.Title>My Dashboard</S.Title>
+        </a>
       </S.Header>
 
       <S.MenuContainer>

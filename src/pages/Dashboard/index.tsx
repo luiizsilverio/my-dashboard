@@ -16,6 +16,7 @@ import sadImg from '../../assets/sad.svg'
 import grinImg from '../../assets/grinning.svg'
 import PizzaChart from '../../components/PizzaChart'
 import HistoryBox from '../../components/HistoryBox'
+import BarChartBox from '../../components/BarChartBox'
 
 interface IMovimentacao {
   total: number
@@ -156,6 +157,96 @@ const Dashboard = () => {
   }, [yearSel])
 
 
+  const saidasPorFrequencia = useMemo(() => {
+    let totRecorrente = 0
+    let totEventual = 0
+
+    expenses
+    .filter((item) => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      return month === monthSel && year === yearSel
+    })
+    .forEach(item => {
+      const value = parseFloat(item.amount)
+      if (item.frequency === 'recorrente' && !isNaN(value)) {
+        return totRecorrente += value
+      }
+
+      if (item.frequency === 'eventual' && !isNaN(value)) {
+        return totEventual += value
+      }
+    })
+    
+    const total = totRecorrente + totEventual
+    const perc_R = total === 0 ? 0 : (totRecorrente / total * 100);
+    const perc_E = total === 0 ? 0 : (totEventual / total * 100);
+
+    return [
+      {
+        name: 'Recorrentes',
+        amount: totRecorrente,
+        percent: parseFloat(perc_R.toFixed(1)),
+        color: '#f7931b'
+      },
+      {
+        name: 'Eventuais',
+        amount: totEventual,
+        percent: parseFloat(perc_E.toFixed(1)),
+        color: '#e44c4e'
+      }
+    ]
+    
+  }, [yearSel, monthSel])
+
+
+  const entradasPorFrequencia = useMemo(() => {
+    let totRecorrente = 0
+    let totEventual = 0
+
+    gains
+    .filter((item) => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      return month === monthSel && year === yearSel
+    })
+    .forEach(item => {
+      const value = parseFloat(item.amount)
+      if (item.frequency === 'recorrente' && !isNaN(value)) {
+        return totRecorrente += value
+      }
+
+      if (item.frequency === 'eventual' && !isNaN(value)) {
+        return totEventual += value
+      }
+    })
+    
+    const total = totRecorrente + totEventual
+    const perc_R = total === 0 ? 0 : (totRecorrente / total * 100);
+    const perc_E = total === 0 ? 0 : (totEventual / total * 100);
+
+    return [
+      {
+        name: 'Recorrentes',
+        amount: totRecorrente,
+        percent: parseFloat(perc_R.toFixed(1)),
+        color: '#f7931b'
+      },
+      {
+        name: 'Eventuais',
+        amount: totEventual,
+        percent: parseFloat(perc_E.toFixed(1)),
+        color: '#e44c4e'
+      }
+    ]
+    
+  }, [yearSel, monthSel])
+
+
   const message = useMemo(() => {
     if (saldo < 0) {
       return {
@@ -287,6 +378,16 @@ const Dashboard = () => {
           lineColorSai='#e44c4e'
         />
 
+        <BarChartBox 
+          title='Saídas' 
+          data={saidasPorFrequencia} 
+        />
+
+        <BarChartBox 
+          title='Entradas' 
+          data={entradasPorFrequencia} 
+        />
+                
       </S.Content>
     </S.Container>
   )

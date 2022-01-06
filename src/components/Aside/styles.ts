@@ -11,12 +11,24 @@ export const Container = styled.aside`
 export const Header = styled.header`
   height: 70px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+
+  > a {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    text-decoration: none;
+  }
 `;
 
 export const Logo = styled.img`
   height: 40px;
   width: 40px;
+`;
+
+export const Title = styled.h3`
+  color: ${props => props.theme.colors.white};
+  margin-left: 8px;
 `;
 
 export const MenuContainer = styled.nav`
@@ -46,9 +58,3 @@ export const MenuLink = styled.a`
     margin-right: 4px;
   }
 `;
-
-export const Title = styled.h3`
-  color: ${props => props.theme.colors.white};
-  margin-left: 8px;
-`;
-
