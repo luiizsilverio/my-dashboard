@@ -31,13 +31,25 @@ interface ProviderProps {
 }
 
 function ThemeProvider ({ children }: ProviderProps) {
-  const [theme, setTheme] = useState<ITheme>(dark)
+  const [theme, setTheme] = useState<ITheme>(() => {
+    const saved = localStorage.getItem('@my-dashboard:theme')
+
+    if (saved) {
+      return JSON.parse(saved)
+    } else {
+      return dark
+    }
+  })
 
   const toggleTheme = () => {
-    if (theme.title === 'dark') 
+    if (theme.title === 'dark') {
       setTheme(light);
-    else  
+      localStorage.setItem('@my-dashboard:theme', JSON.stringify(light) )
+    }
+    else {
       setTheme(dark);
+      localStorage.setItem('@my-dashboard:theme', JSON.stringify(dark) )
+    }
   }
 
   return (

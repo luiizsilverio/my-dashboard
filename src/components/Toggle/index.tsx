@@ -2,19 +2,24 @@ import { useState } from 'react'
 
 import * as S from './styles'
 
-const Toggle = () => {
-  const [ativo, setAtivo] = useState(true)
+interface Props {
+  labelLeft: string
+  labelRight: string
+  checked: boolean
+  onChange(): void
+}
 
+const Toggle = (props: Props) => {
   return (
     <S.Container>
-      <S.ToggleLabel>Light</S.ToggleLabel>
+      <S.ToggleLabel>{ props.labelLeft }</S.ToggleLabel>
       <S.MySwitch 
-        onChange={(v) => setAtivo(v)} 
-        checked={ativo}
+        onChange={ props.onChange } 
+        checked={ props.checked }
         checkedIcon={false}
         uncheckedIcon={false}   
       />
-      <S.ToggleLabel>Dark</S.ToggleLabel>
+      <S.ToggleLabel>{ props.labelRight }</S.ToggleLabel>
     </S.Container>
   )
 }
