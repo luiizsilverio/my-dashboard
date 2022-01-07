@@ -2,8 +2,11 @@ import { MdDashboard, MdArrowDownward, MdArrowUpward, MdExitToApp } from 'react-
 
 import * as S from './styles'
 import logoImg from '../../assets/logo.svg'
+import { useAuth } from '../../hooks/auth'
 
 const Aside = () => {
+  const { signOut } = useAuth()
+
   return (
     <S.Container>
       <S.Header>
@@ -14,7 +17,7 @@ const Aside = () => {
       </S.Header>
 
       <S.MenuContainer>
-        <S.MenuLink href="/dashboard">
+        <S.MenuLink href="/">
           <MdDashboard />
           Dashboard
         </S.MenuLink>
@@ -26,10 +29,10 @@ const Aside = () => {
           <MdArrowDownward />
           Saídas
         </S.MenuLink>
-        <S.MenuLink href="#">
+        <S.MenuItemButton onClick={ signOut }>
           <MdExitToApp />
           Sair
-        </S.MenuLink>
+        </S.MenuItemButton>
       </S.MenuContainer>
     </S.Container>
   )
