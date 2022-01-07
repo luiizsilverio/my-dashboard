@@ -1,10 +1,14 @@
 import { useMemo } from 'react'
+
 import * as S from './styles'
+import { useTheme } from '../../hooks/theme'
 
 import emojis from '../../utils/emojis'
 import Toggle from '../Toggle'
 
 const MainHeader = () => {
+  const { toggleTheme, theme } = useTheme()
+  
   const emoji = useMemo(() => {
     const i = Math.floor(Math.random() * emojis.length)
     return emojis[i]
