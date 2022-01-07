@@ -3,7 +3,7 @@ import { useState } from 'react'
 import * as S from './styles'
 
 const Toggle = () => {
-  const [ativo, setAtivo] = useState(false)
+  const [ativo, setAtivo] = useState(true)
 
   return (
     <S.Container>

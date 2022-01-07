@@ -1,7 +1,7 @@
 import { ResponsiveContainer, BarChart, Bar, Cell, Tooltip } from 'recharts'
-import formatValue from '../../utils/formatValue'
 
 import * as S from './styles'
+import formatValue from '../../utils/formatValue'
 
 interface Props {
   title: string;
@@ -33,7 +33,7 @@ const BarChartBox = ({ title, data }: Props) => {
       <S.Main>
         <ResponsiveContainer>
           <BarChart data={ data }>            
-            <Bar dataKey="amount">
+            <Bar dataKey="amount" name="Valor">
               {
                 data.map(item => (
                   <Cell
@@ -46,7 +46,8 @@ const BarChartBox = ({ title, data }: Props) => {
             </Bar>
             <Tooltip 
               formatter={(value: number) => formatValue(value)}
-              animationDuration={0} 
+              cursor={{ fill: 'none '}}
+              // animationDuration={0} 
             />
           </BarChart>
         </ResponsiveContainer>

@@ -1,19 +1,19 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 
 import * as S from './styles'
 import gains from '../../utils/gains'
 import expenses from '../../utils/expenses'
-import formatValue from '../../utils/formatValue'
 import formatDate from '../../utils/formatDate'
 import months from '../../utils/months'
+import happyImg from '../../assets/happy.svg'
+import sadImg from '../../assets/sad.svg'
+import grinImg from '../../assets/grinning.svg'
+import opsImg from '../../assets/ops.svg'
 
 import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
 import TotalCard from '../../components/TotalCard'
 import MessageBox from '../../components/MessageBox'
-import happyImg from '../../assets/happy.svg'
-import sadImg from '../../assets/sad.svg'
-import grinImg from '../../assets/grinning.svg'
 import PizzaChart from '../../components/PizzaChart'
 import HistoryBox from '../../components/HistoryBox'
 import BarChartBox from '../../components/BarChartBox'
@@ -256,6 +256,14 @@ const Dashboard = () => {
         icon: sadImg
       }
     } 
+    else if (entradas.total === 0 && saidas.total === 0) {
+      return {
+        title: "Ops!",
+        description: "Neste mês não há nenhum movimento de entrada ou saída.",
+        footer: "Parece que você ficou offline esse mês",
+        icon: opsImg
+      }
+    }
     else if (saldo === 0) {
       return {
         title: "Ufaa!",
@@ -272,7 +280,7 @@ const Dashboard = () => {
         icon: happyImg
       }
     }
-  }, [saldo])
+  }, [saldo, entradas.total, saidas.total])
 
 
   const resultado = useMemo(() => {
@@ -299,23 +307,23 @@ const Dashboard = () => {
   }, [entradas, saidas])
 
 
-  function handleMonth(month: string) {
+  const handleMonth = useCallback((month: string) => {
     const mes = parseInt(month)
     if (!isNaN(mes)) {
       setMonthSel(mes)
     } else {
       throw new Error('Mês inválido');
     }
-  }
+  }, [])
 
-  function handleYear(year: string) {
+  const handleYear = useCallback((year: string) => {
     const ano = parseInt(year)
     if (!isNaN(ano)) {
       setYearSel(ano)
     } else {
       throw new Error('Ano inválido');
     }
-  }
+  }, [])
   
   return (
     <S.Container>
@@ -372,12 +380,6 @@ const Dashboard = () => {
           data={ resultado }
         />
 
-        <HistoryBox 
-          data={ historyData } 
-          lineColorEnt='#f7931b'
-          lineColorSai='#e44c4e'
-        />
-
         <BarChartBox 
           title='Saídas' 
           data={saidasPorFrequencia} 
@@ -387,7 +389,13 @@ const Dashboard = () => {
           title='Entradas' 
           data={entradasPorFrequencia} 
         />
-                
+
+        <HistoryBox 
+          data={ historyData } 
+          lineColorEnt='#f7931b'
+          lineColorSai='#e44c4e'
+        />
+
       </S.Content>
     </S.Container>
   )
