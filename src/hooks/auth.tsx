@@ -23,9 +23,9 @@ function AuthProvider ({ children }: ProviderProps) {
       localStorage.setItem('@my-dashboard:logged', 'true')
       setLogged(true)
     } else {
+      alert('Senha ou usuário inválido')
       localStorage.setItem('@my-dashboard:logged', 'false')
       setLogged(false)
-      alert('Senha ou usuário inválido')
     }
   }
 

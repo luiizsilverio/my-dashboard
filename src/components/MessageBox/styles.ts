@@ -27,4 +27,28 @@ export const Container = styled.div`
       font-weight: 700;
     }
   }
+
+  @media(max-width: 770px) {
+    width: 100%;
+    height: auto;
+
+    > header h1 {
+      font-size: 24px;
+
+      img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    > header p {
+      margin-bottom: 15px;
+    }
+
+    > header h1, > footer span {
+      font-size: 14px;
+    }
+  }
+
+  
 `;

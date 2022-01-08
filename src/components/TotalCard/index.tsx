@@ -33,11 +33,12 @@ const TotalCard = (props: Props) => {
     <S.Container color={ props.color }>
       <span>{ props.title }</span>
       <h1>
+        <strong>R$ </strong>
         <CountUp
           start={ props.amount > 100 ? props.amount - 100 : 0 }
           end={ props.amount }
           duration={1.2}
-          prefix='R$ '
+          // prefix='R$ '
           separator='.'
           decimal=','
           decimals={2}

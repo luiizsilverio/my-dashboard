@@ -8,6 +8,11 @@ export const Container = styled.div`
   color: ${props => props.theme.colors.white};
   border-radius: 6px;
   display: flex;
+
+  @media(max-width: 770px) {
+    display: flex;
+    width: 100%;
+  }  
 `;
 
 export const SideLeft = styled.aside`
@@ -15,6 +20,10 @@ export const SideLeft = styled.aside`
 
   > h2 {
     margin-bottom: 20px;
+  }
+
+  @media(max-width: 770px) {
+    padding: 20px 5px 20px 20px;
   }
 `;
 
