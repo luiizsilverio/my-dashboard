@@ -17,7 +17,7 @@ const Toggle = (props: Props) => {
         onChange={ props.onChange } 
         checked={ props.checked }
         checkedIcon={false}
-        uncheckedIcon={false}   
+        uncheckedIcon={false}           
       />
       <S.ToggleLabel>{ props.labelRight }</S.ToggleLabel>
     </S.Container>

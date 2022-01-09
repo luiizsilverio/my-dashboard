@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Toggle from '../Toggle'
 
 export const Container = styled.header`
   grid-area: MH;
@@ -9,6 +10,7 @@ export const Container = styled.header`
   align-items: center;
   padding: 0 15px;
   border-bottom: 1px solid ${props => props.theme.colors.gray};
+
 `;
 
 export const Profile = styled.header`
@@ -20,4 +22,8 @@ export const Welcome = styled.h3`
 `;
 
 export const UserName = styled.span`
+`;
+
+export const StyledToggle = styled(Toggle)`
+  
 `;

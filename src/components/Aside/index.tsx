@@ -8,7 +8,7 @@ const Aside = () => {
   const { signOut } = useAuth()
 
   return (
-    <S.Container>
+    <S.Container menuOpen={true}>
       <S.Header>
         <a href="/">
           <S.Logo src={logoImg} alt="Logotipo My-Dashboard" />
