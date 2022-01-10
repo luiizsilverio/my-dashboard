@@ -4,6 +4,7 @@ import * as S from './styles'
 import { useTheme } from '../../hooks/theme'
 
 import emojis from '../../utils/emojis'
+import Toggle from '../Toggle'
 
 const MainHeader = () => {
   const { toggleTheme, theme } = useTheme()
@@ -21,7 +22,7 @@ const MainHeader = () => {
 
   return (
     <S.Container>
-      <S.StyledToggle 
+      <Toggle 
         labelLeft='Light'
         labelRight='Dark'
         checked={ darkTheme }

@@ -6,6 +6,11 @@ export const Container = styled.div`
   justify-content: space-between;
   margin-bottom: 25px;
   
+  @media(max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
 `;
 
 type TitleProps = {
@@ -24,6 +29,10 @@ export const TitleContainer = styled.div<TitleProps>`
         border-bottom: 5px solid ${props => props.lineColor};
       }
     }
+
+    @media(max-width: 500px) {
+      margin-bottom: 15px;
+    }    
 `;
 
 export const Controllers = styled.div`

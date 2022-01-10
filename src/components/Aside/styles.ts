@@ -31,22 +31,23 @@ export const Container = styled.aside<Props>`
 export const Header = styled.header`
   height: 70px;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
 
   > a {
     display: flex;
     flex: 1;
     align-items: center;
     text-decoration: none;
-  }
-  
+  }  
 `;
 
 export const Logo = styled.img`
   height: 40px;
-  width: 40px;
+  width: 40px;  
 
-  
+  @media(max-width: 700px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.h3`
@@ -108,5 +109,39 @@ export const MenuItemButton = styled.button`
   > svg {
     font-size: 22px;
     margin-right: 4px;
+  }
+`;
+
+export const ToggleMenu = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 22px;
+  background-color: ${props => props.theme.colors.warning};
+  color: ${props => props.theme.colors.white};
+  transition: opacity .3s;
+  
+  &:hover {
+    opacity: 0.7;
+  }
+  
+  display: none;
+  
+  @media(max-width: 700px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const Footer = styled.footer<Props>`
+  display: none;
+  position: absolute;
+  bottom: 30px;
+  left: 14px;
+  font-size: 14px;
+
+  @media(max-width: 560px) {
+    display: ${props => props.menuOpen ? 'flex' : 'none'};
   }
 `;
