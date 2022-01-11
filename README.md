@@ -9,7 +9,7 @@
 * [Sobre o Projeto](#sobre-o-projeto)
 * [Tecnologias](#hammer_and_wrench-tecnologias)
 * [Screenshots](#camera_flash-screenshots)
-* [Iniciando o Projeto](#car-Iniciando-o-projeto)
+* [Iniciando a Aplicação](#car-Iniciando-a-aplicação)
 * [Licença](#balance_scale-licença)
 * [Contato](#email-contato)
 
@@ -30,7 +30,7 @@ A tela de login é fake, que permite logar com senha 123. Talvez em uma próxima
 ## :camera_flash: Screenshots
 ![](https://github.com/luiizsilverio/my-dashboard/blob/main/src/assets/dashboard.gif)
 
-## :car: Iniciando o projeto
+## :car: Iniciando a Aplicação
 * Baixe o repositório com ``` git clone ``` e entre na pasta da aplicação.
 * Digite ``` yarn start``` no terminal, para iniciar a aplicação.
 
