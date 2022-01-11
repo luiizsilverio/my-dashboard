@@ -1,4 +1,15 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const animacao = keyframes`
+  from {
+    transform: scale(.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
 
 interface Props {
   color: string
@@ -14,6 +25,8 @@ export const Container = styled.div<Props>`
   padding: 10px 20px;
   position: relative;
   overflow: hidden;
+
+  animation: ${ animacao } .5s;
 
   > img {
     position: absolute;

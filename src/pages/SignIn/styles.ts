@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const animacao = keyframes`
+	from {
+		opacity: 0;
+		transform: translateY(10px) scale(.7);
+
+	}
+	to {
+		opacity: 1;
+    transform: translateY(0) scale(1);
+	}
+`
 
 export const Container = styled.div`
   height: 100vh;
@@ -14,6 +26,8 @@ export const Logo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 30px;
+
+  animation: ${ animacao } .5s;
 
   > h2 {
     color: ${props => props.theme.colors.white};
@@ -33,6 +47,7 @@ export const Form = styled.form`
   border-radius: 10px;
   background-color: ${props => props.theme.colors.complementar};
 
+  animation: ${ animacao } .5s;
 `;
 
 export const FormTitle = styled.h1`

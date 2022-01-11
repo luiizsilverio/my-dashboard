@@ -1,4 +1,15 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const subir = keyframes`
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+`
 
 export const Container = styled.li`
   background-color: ${props => props.theme.colors.complementar};
@@ -13,6 +24,8 @@ export const Container = styled.li`
   position: relative;
   cursor: pointer;
   transition: all .3s;
+
+  animation: ${ subir } .5s ease-out;
 
   &:hover {
     opacity: .7;
