@@ -15,7 +15,8 @@
 
 ## Sobre o projeto
 Aplicação desenvolvida em React com Typescript que exibe um dashboard com gráficos de entradas e saídas.<br />
-Não trabalha com banco de dados nem login social. Seu propósito é a exibição de gráficos com animações, responsividade e temas dark e light.<br />
+Desenvolvido durante o [curso do professor Rodrigo Santana](https://www.udemy.com/course/react-e-typescript/), não trabalha com banco de dados nem login social.<br />
+Seu propósito é a exibição de gráficos com animações, responsividade e temas dark e light.<br />
 
 Possui poucas telas, a saber: de login, de entradas, de saídas e o Dashboard, que é a tela principal.<br />
 A tela de login é fake, que permite logar com senha 123. Talvez em uma próxima versão eu implemente login com conta do Google e banco de dados, ao invés de uma lista JSON fixa.<br />
