@@ -9,6 +9,7 @@
 * [Sobre o Projeto](#sobre-o-projeto)
 * [Tecnologias](#hammer_and_wrench-tecnologias)
 * [Screenshots](#camera_flash-screenshots)
+* [Iniciando o Projeto](#car-Iniciando-o-projeto)
 * [Licença](#balance_scale-licença)
 * [Contato](#email-contato)
 
@@ -28,6 +29,10 @@ A tela de login é fake, que permite logar com senha 123. Talvez em uma próxima
 
 ## :camera_flash: Screenshots
 ![](https://github.com/luiizsilverio/my-dashboard/blob/main/src/assets/dashboard.gif)
+
+## :car: Iniciando o projeto
+* Baixe o repositório com ``` git clone ``` e entre na pasta da aplicação.
+* Digite ``` yarn start``` no terminal, para iniciar a aplicação.
 
 ## :balance_scale: Licença
 Este projeto está licenciado sob a [licença MIT](LICENSE).
